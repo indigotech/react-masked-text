@@ -1,6 +1,6 @@
 {
-  "name": "react-masked-text",
-  "version": "0.4.2",
+  "name": "react-masked-text2",
+  "version": "0.4.3",
   "description": "Text and TextInput with mask for React applications, based on benhurott/react-native-masked-text.",
   "licenses": [
     {
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/emiyake/react-masked-text"
+    "url": "git+https://github.com/Biscoint/react-masked-text"
   },
   "keywords": [
     "mask",
