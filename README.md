@@ -244,7 +244,7 @@ If you want, we expose the `MaskService`. You can use it:
 Ex:
 
 ``` jsx
-import {MaskService} from 'react-masked-text'
+import MaskService from 'react-masked-text/dist/mask-service';
 
 var money = MaskService.toMask('money', '123', {
 	unit: 'US$',
