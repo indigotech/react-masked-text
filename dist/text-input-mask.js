@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-  typeof define === 'function' && define.amd ? define(['react'], factory) :
-  (global.ReactTextMask = factory(global.react));
-}(this, (function (React) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
+  (factory((global.ReactTextMask = {}),global.react));
+}(this, (function (exports,React) { 'use strict';
 
   var React__default = 'default' in React ? React['default'] : React;
 
@@ -945,6 +945,28 @@
     return BaseTextComponent;
   }(React.Component);
 
+  var MaskService =
+  /*#__PURE__*/
+  function () {
+    function MaskService() {
+      _classCallCheck(this, MaskService);
+    }
+
+    _createClass(MaskService, null, [{
+      key: "toMask",
+      value: function toMask(type, value, settings) {
+        return MaskResolver.resolve(type).getValue(value, settings);
+      }
+    }, {
+      key: "isValid",
+      value: function isValid(type, value, settings) {
+        return MaskResolver.resolve(type).validate(value, settings);
+      }
+    }]);
+
+    return MaskService;
+  }();
+
   var TextInputMask =
   /*#__PURE__*/
   function (_BaseTextComponent) {
@@ -1032,6 +1054,9 @@
     return TextInputMask;
   }(BaseTextComponent);
 
-  return TextInputMask;
+  exports.MaskService = MaskService;
+  exports.default = TextInputMask;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
