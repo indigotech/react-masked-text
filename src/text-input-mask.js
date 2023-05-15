@@ -34,20 +34,8 @@ export default class TextInputMask extends BaseTextComponent {
 		return true;
 	}
 
-	_propsParsed(props) {
-		const newProps = props;
-		Object.keys(props).forEach(prop => {
-				if (typeof props[prop] === 'boolean') {
-					newProps[prop] = props[prop].toString();
-				}
-			});
-
-		return newProps;
-	}
-
 	render() {
 		const { defaultValue, value, onChange, onChangeText, ...otherProps } = this.props;
-		const parsedProps = this._propsParsed(otherProps);
 		const maskedValue = this._getDefaultMaskedValue(this._isControlled() ? value : this.state.value)
 
 		if (value !== undefined && defaultValue !== undefined) {
@@ -59,7 +47,7 @@ export default class TextInputMask extends BaseTextComponent {
 				ref={(ref) => {this._input = ref}}
 				onChange={(event) => this._onChangeText(event.currentTarget.value)}
 				value={maskedValue}
-				{...parsedProps}
+				{...otherProps}
 			/>
 		);
 	}

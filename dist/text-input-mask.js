@@ -1009,17 +1009,6 @@
         return true;
       }
     }, {
-      key: "_propsParsed",
-      value: function _propsParsed(props) {
-        var newProps = props;
-        Object.keys(props).forEach(function (prop) {
-          if (typeof props[prop] === 'boolean') {
-            newProps[prop] = props[prop].toString();
-          }
-        });
-        return newProps;
-      }
-    }, {
       key: "render",
       value: function render() {
         var _this = this;
@@ -1030,8 +1019,6 @@
             onChange = _this$props.onChange,
             onChangeText = _this$props.onChangeText,
             otherProps = _objectWithoutProperties(_this$props, ["defaultValue", "value", "onChange", "onChangeText"]);
-
-        var parsedProps = this._propsParsed(otherProps);
 
         var maskedValue = this._getDefaultMaskedValue(this._isControlled() ? value : this.state.value);
 
@@ -1047,7 +1034,7 @@
             return _this._onChangeText(event.currentTarget.value);
           },
           value: maskedValue
-        }, parsedProps));
+        }, otherProps));
       }
     }]);
 
