@@ -2,5 +2,5 @@ node_modules/
 .vscode/
 .idea/
 npm-debug.log
-
+dist
 poc.js

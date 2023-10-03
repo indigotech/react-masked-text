@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
-    typeof define === 'function' && define.amd ? define(['react'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global["My Bundle"] = factory(global.React));
-})(this, (function (React) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react')) :
+    typeof define === 'function' && define.amd ? define(['exports', 'react'], factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["My Bundle"] = {}, global.React));
+})(this, (function (exports, React) { 'use strict';
 
     /******************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -202,125 +202,70 @@
         return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
     };
 
-    function _typeof(obj) {
-      if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-        _typeof = function (obj) {
-          return typeof obj;
-        };
-      } else {
-        _typeof = function (obj) {
-          return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-        };
-      }
-
-      return _typeof(obj);
-    }
-
-    function _classCallCheck(instance, Constructor) {
-      if (!(instance instanceof Constructor)) {
-        throw new TypeError("Cannot call a class as a function");
-      }
-    }
-
-    function _defineProperties(target, props) {
-      for (var i = 0; i < props.length; i++) {
-        var descriptor = props[i];
-        descriptor.enumerable = descriptor.enumerable || false;
-        descriptor.configurable = true;
-        if ("value" in descriptor) descriptor.writable = true;
-        Object.defineProperty(target, descriptor.key, descriptor);
-      }
-    }
-
-    function _createClass(Constructor, protoProps, staticProps) {
-      if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-      if (staticProps) _defineProperties(Constructor, staticProps);
-      return Constructor;
-    }
-
-    var VanillaMasker = 
-    /*#__PURE__*/
-    function () {
+    //@ts-nocheck
+    var VanillaMasker = /** @class */ (function () {
         function VanillaMasker(elements) {
-            _classCallCheck(this, VanillaMasker);
             this.elements = elements;
         }
-        _createClass(VanillaMasker, [{
-                key: "unbindElementToMask",
-                value: function unbindElementToMask() {
-                    for (var i = 0, len = this.elements.length; i < len; i++) {
-                        this.elements[i].lastOutput = '';
-                        this.elements[i].onkeyup = false;
-                        this.elements[i].onkeydown = false;
-                        if (this.elements[i].value.length) {
-                            this.elements[i].value = this.elements[i].value.replace(/\D/g, '');
+        VanillaMasker.prototype.unbindElementToMask = function () {
+            for (var i = 0, len = this.elements.length; i < len; i++) {
+                this.elements[i].lastOutput = '';
+                this.elements[i].onkeyup = false;
+                this.elements[i].onkeydown = false;
+                if (this.elements[i].value.length) {
+                    this.elements[i].value = this.elements[i].value.replace(/\D/g, '');
+                }
+            }
+        };
+        VanillaMasker.prototype.bindElementToMask = function (maskFunction) {
+            var that = this;
+            var onType = function (e) {
+                var source = e.target || e.srcElement;
+                if (isAllowedKeyCode(e.keyCode)) {
+                    setTimeout(function () {
+                        that.opts.lastOutput = source.lastOutput;
+                        source.value = VMasker[maskFunction](source.value, that.opts);
+                        source.lastOutput = source.value;
+                        if (source.setSelectionRange && that.opts.suffixUnit) {
+                            source.setSelectionRange(source.value.length, source.value.length - that.opts.suffixUnit.length);
                         }
-                    }
+                    }, 0);
                 }
-            }, {
-                key: "bindElementToMask",
-                value: function bindElementToMask(maskFunction) {
-                    var that = this;
-                    var onType = function onType(e) {
-                        var source = e.target || e.srcElement;
-                        if (isAllowedKeyCode(e.keyCode)) {
-                            setTimeout(function () {
-                                that.opts.lastOutput = source.lastOutput;
-                                source.value = VMasker[maskFunction](source.value, that.opts);
-                                source.lastOutput = source.value;
-                                if (source.setSelectionRange && that.opts.suffixUnit) {
-                                    source.setSelectionRange(source.value.length, source.value.length - that.opts.suffixUnit.length);
-                                }
-                            }, 0);
-                        }
-                    };
-                    for (var i = 0, len = this.elements.length; i < len; i++) {
-                        this.elements[i].lastOutput = '';
-                        this.elements[i].onkeyup = onType;
-                        if (this.elements[i].value.length) {
-                            this.elements[i].value = VMasker[maskFunction](this.elements[i].value, this.opts);
-                        }
-                    }
+            };
+            for (var i = 0, len = this.elements.length; i < len; i++) {
+                this.elements[i].lastOutput = '';
+                this.elements[i].onkeyup = onType;
+                if (this.elements[i].value.length) {
+                    this.elements[i].value = VMasker[maskFunction](this.elements[i].value, this.opts);
                 }
-            }, {
-                key: "maskMoney",
-                value: function maskMoney(opts) {
-                    this.opts = mergeMoneyOptions(opts);
-                    this.bindElementToMask('toMoney');
-                }
-            }, {
-                key: "maskNumber",
-                value: function maskNumber() {
-                    this.opts = {};
-                    this.bindElementToMask('toNumber');
-                }
-            }, {
-                key: "maskAlphaNum",
-                value: function maskAlphaNum() {
-                    this.opts = {};
-                    this.bindElementToMask('toAlphaNumeric');
-                }
-            }, {
-                key: "maskPattern",
-                value: function maskPattern(pattern) {
-                    this.opts = {
-                        pattern: pattern
-                    };
-                    this.bindElementToMask('toPattern');
-                }
-            }, {
-                key: "unMask",
-                value: function unMask() {
-                    this.unbindElementToMask();
-                }
-            }]);
+            }
+        };
+        VanillaMasker.prototype.maskMoney = function (opts) {
+            this.opts = mergeMoneyOptions(opts);
+            this.bindElementToMask('toMoney');
+        };
+        VanillaMasker.prototype.maskNumber = function () {
+            this.opts = {};
+            this.bindElementToMask('toNumber');
+        };
+        VanillaMasker.prototype.maskAlphaNum = function () {
+            this.opts = {};
+            this.bindElementToMask('toAlphaNumeric');
+        };
+        VanillaMasker.prototype.maskPattern = function (pattern) {
+            this.opts = { pattern: pattern };
+            this.bindElementToMask('toPattern');
+        };
+        VanillaMasker.prototype.unMask = function () {
+            this.unbindElementToMask();
+        };
         return VanillaMasker;
-    }();
-    var VMasker = function VMasker(el) {
+    }());
+    var VMasker = function (el) {
         if (!el) {
             throw new Error('VanillaMasker: There is no element to bind.');
         }
-        var elements = 'length' in el ? el.length ? el : [] : [el];
+        var elements = 'length' in el ? (el.length ? el : []) : [el];
         return new VanillaMasker(elements);
     };
     VMasker.toMoney = function (value, opts) {
@@ -363,7 +308,7 @@
         return output.replace(clearSeparator, '');
     };
     VMasker.toPattern = function (value, opts) {
-        var pattern = _typeof(opts) === 'object' ? opts.pattern : opts;
+        var pattern = typeof opts === 'object' ? opts.pattern : opts;
         var patternChars = pattern.replace(/\W/g, '');
         var output = pattern.split('');
         var values = value.toString().replace(/\W/g, '');
@@ -371,7 +316,7 @@
         var index = 0;
         var i;
         var outputLength = output.length;
-        var placeholder = _typeof(opts) === 'object' ? opts.placeholder : undefined;
+        var placeholder = typeof opts === 'object' ? opts.placeholder : undefined;
         for (i = 0; i < outputLength; i++) {
             if (index >= values.length) {
                 if (patternChars.length == charsValues.length) {
@@ -385,7 +330,9 @@
                 }
             }
             else {
-                if (output[i] === DIGIT && values[index].match(/[0-9]/) || output[i] === ALPHA && values[index].match(/[a-zA-Z]/) || output[i] === ALPHANUM && values[index].match(/[0-9a-zA-Z]/)) {
+                if ((output[i] === DIGIT && values[index].match(/[0-9]/)) ||
+                    (output[i] === ALPHA && values[index].match(/[a-zA-Z]/)) ||
+                    (output[i] === ALPHANUM && values[index].match(/[0-9a-zA-Z]/))) {
                     output[i] = values[index++];
                 }
                 else if (output[i] === DIGIT || output[i] === ALPHA || output[i] === ALPHANUM) {
@@ -421,9 +368,9 @@
             separator: opts.separator || ',',
             delimiter: opts.delimiter || '.',
             unit: opts.unit ? opts.unit + ' ' : '',
-            suffixUnit: opts.suffixUnit && ' ' + opts.suffixUnit.replace(/[\s]/g, '') || '',
+            suffixUnit: (opts.suffixUnit && ' ' + opts.suffixUnit.replace(/[\s]/g, '')) || '',
             zeroCents: opts.zeroCents,
-            lastOutput: opts.lastOutput
+            lastOutput: opts.lastOutput,
         };
         opts.moneyPrecision = opts.zeroCents ? 0 : opts.precision;
         return opts;
@@ -1003,7 +950,7 @@
         return ZipCodeMask;
     }(BaseMask));
 
-    var Masks = {
+    var MaskHandlers = {
         'cel-phone': CelPhoneMask,
         cpf: CpfMask,
         'credit-card': CreditCardMask,
@@ -1014,12 +961,80 @@
         'zip-code': ZipCodeMask,
         cnpj: CnpjMask,
     };
+    var Masks = /** @class */ (function () {
+        function Masks() {
+        }
+        Masks.celPhone = function (customMask) {
+            return {
+                mask: customMask || '(99) 99999-9999',
+                type: 'phone',
+                kind: 'cel-phone',
+            };
+        };
+        Masks.cpf = function (customMask) {
+            return {
+                mask: customMask || '999.999.999-99',
+                type: 'text',
+                kind: 'cpf',
+            };
+        };
+        Masks.creditCard = function (customMask) {
+            return {
+                mask: customMask || '9999 9999 9999 9999',
+                type: 'text',
+                kind: 'credit-card',
+            };
+        };
+        Masks.custom = function (customMask) {
+            return {
+                mask: customMask,
+                type: 'text',
+                kind: 'custom',
+            };
+        };
+        Masks.datetime = function (customMask) {
+            return {
+                mask: customMask || 'DD/MM/YYYY HH:mm:ss',
+                type: 'text',
+                kind: 'datetime',
+            };
+        };
+        Masks.money = function (customMask) {
+            return {
+                mask: customMask,
+                type: 'text',
+                kind: 'money',
+            };
+        };
+        Masks.onlyNumbers = function (customMask) {
+            return {
+                mask: customMask || undefined,
+                type: 'number',
+                kind: 'only-numbers',
+            };
+        };
+        Masks.zipCode = function (customMask) {
+            return {
+                mask: customMask || '99999-999',
+                type: 'text',
+                kind: 'zip-code',
+            };
+        };
+        Masks.cnpj = function (customMask) {
+            return {
+                mask: customMask || '99.999.999/9999-99',
+                type: 'text',
+                kind: 'cnpj',
+            };
+        };
+        return Masks;
+    }());
 
     var MaskResolver = /** @class */ (function () {
         function MaskResolver() {
         }
         MaskResolver.resolve = function (kind) {
-            var handler = Masks[kind];
+            var handler = MaskHandlers[kind];
             if (!handler) {
                 return null;
                 // throw new Error('Mask type not supported.');
@@ -1032,7 +1047,7 @@
     var BaseTextComponent = function (props, ref) {
         var maskHandlerRef = React.useRef(null); // Adjust the type according to MaskResolver
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        var defaultValue = props.defaultValue, value = props.value, kind = props.kind, onChange = props.onChange, options = props.options, otherProps = __rest(props, ["defaultValue", "value", "kind", "onChange", "options"]);
+        var defaultValue = props.defaultValue, value = props.value, mask = props.mask, onChange = props.onChange, otherProps = __rest(props, ["defaultValue", "value", "mask", "onChange"]);
         var _a = React.useState(""), maskedValue = _a[0], setMaskedValue = _a[1];
         var isControlled = React.useCallback(function () {
             return value !== undefined;
@@ -1042,27 +1057,25 @@
             if (defaultValue !== undefined && value !== undefined) {
                 throw new Error("Use either the defaultValue prop, or the value prop, but not both");
             }
-            maskHandlerRef.current = MaskResolver.resolve(kind);
-            var masked = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(defaultValue || "", options)) ||
-                defaultValue;
+            maskHandlerRef.current = MaskResolver.resolve((mask === null || mask === void 0 ? void 0 : mask.kind) || "custom");
+            var masked = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(defaultValue || "", {
+                mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
+            })) || defaultValue;
             if (isControlled) {
-                masked = ((_b = maskHandlerRef.current) === null || _b === void 0 ? void 0 : _b.getValue(value || "", options)) || value;
+                masked =
+                    ((_b = maskHandlerRef.current) === null || _b === void 0 ? void 0 : _b.getValue(value || "", {
+                        mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
+                    })) || value;
             }
             setMaskedValue(masked);
-        }, [kind, defaultValue, options, value, isControlled]);
-        // const isValid = (): boolean => {
-        //   const val = isControlled() ? props.value || '' : value;
-        //   return maskHandlerRef.current.validate(getDefaultValue(val));
-        // };
-        // const getRawValue = (): string => {
-        //   const val = isControlled() ? props.value || '' : value;
-        //   return maskHandlerRef.current.getRawValue(getDefaultValue(val));
-        // };
+        }, [mask, defaultValue, value, isControlled]);
         var handleChangeText = function (text) { return __awaiter(void 0, void 0, void 0, function () {
             var maskedText;
             var _a;
             return __generator(this, function (_b) {
-                maskedText = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(text || "", options)) || text;
+                maskedText = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(text || "", {
+                    mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
+                })) || text;
                 onChange === null || onChange === void 0 ? void 0 : onChange(maskedText);
                 if (!isControlled()) {
                     setMaskedValue(maskedText);
@@ -1070,10 +1083,13 @@
                 return [2 /*return*/];
             });
         }); };
-        return (React.createElement("input", __assign({ ref: ref }, otherProps, { value: maskedValue, onChange: function (event) { return handleChangeText(event.currentTarget.value); } })));
+        return (React.createElement("input", __assign({ ref: ref, type: (mask === null || mask === void 0 ? void 0 : mask.type) || "text" }, otherProps, { value: maskedValue, onChange: function (event) { return handleChangeText(event.currentTarget.value); } })));
     };
     var textInputMask = React.forwardRef(BaseTextComponent);
 
-    return textInputMask;
+    exports.Masks = Masks;
+    exports.default = textInputMask;
+
+    Object.defineProperty(exports, '__esModule', { value: true });
 
 }));
