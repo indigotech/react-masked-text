@@ -7,12 +7,15 @@ import React, {
 } from "react";
 
 import MaskResolver from "./mask-resolver";
-import { MaskKey } from "./masks";
+import { MaskKey, Masks } from "./masks";
 
 export interface BaseTextComponentProps
   extends InputHTMLAttributes<HTMLInputElement> {
-  kind?: string;
-  options?: any; // Adjust based on what options might be
+  mask?: {
+    kind: MaskKey;
+    type: string;
+    mask: string;
+  };
 }
 
 const BaseTextComponent: ForwardRefRenderFunction<
@@ -22,7 +25,7 @@ const BaseTextComponent: ForwardRefRenderFunction<
   const maskHandlerRef = useRef<any>(null); // Adjust the type according to MaskResolver
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { defaultValue, value, kind, onChange, options, ...otherProps } = props;
+  const { defaultValue, value, mask, onChange, ...otherProps } = props;
 
   const [maskedValue, setMaskedValue] = useState("");
 
@@ -37,42 +40,40 @@ const BaseTextComponent: ForwardRefRenderFunction<
       );
     }
 
-    maskHandlerRef.current = MaskResolver.resolve(kind as MaskKey);
+    maskHandlerRef.current = MaskResolver.resolve(
+      (mask?.kind as MaskKey) || "custom"
+    );
 
     let masked =
-      maskHandlerRef.current?.getValue(defaultValue || "", options) ||
-      defaultValue;
+      maskHandlerRef.current?.getValue(defaultValue || "", {
+        mask: mask?.mask || "",
+      }) || defaultValue;
 
     if (isControlled) {
-      masked = maskHandlerRef.current?.getValue(value || "", options) || value;
+      masked =
+        maskHandlerRef.current?.getValue(value || "", {
+          mask: mask?.mask || "",
+        }) || value;
     }
 
     setMaskedValue(masked);
-  }, [kind, defaultValue, options, value, isControlled]);
-
-  // const isValid = (): boolean => {
-  //   const val = isControlled() ? props.value || '' : value;
-  //   return maskHandlerRef.current.validate(getDefaultValue(val));
-  // };
-
-  // const getRawValue = (): string => {
-  //   const val = isControlled() ? props.value || '' : value;
-  //   return maskHandlerRef.current.getRawValue(getDefaultValue(val));
-  // };
+  }, [mask, defaultValue, value, isControlled]);
 
   const handleChangeText = async (text: string) => {
     const maskedText =
-      maskHandlerRef.current?.getValue(text || "", options) || text;
+      maskHandlerRef.current?.getValue(text || "", {
+        mask: mask?.mask || "",
+      }) || text;
     onChange?.(maskedText);
 
     if (!isControlled()) {
       setMaskedValue(maskedText);
     }
   };
-
   return (
     <input
       ref={ref}
+      type={mask?.type || "text"}
       {...otherProps}
       value={maskedValue}
       onChange={(event) => handleChangeText(event.currentTarget.value)}
@@ -81,3 +82,4 @@ const BaseTextComponent: ForwardRefRenderFunction<
 };
 
 export default React.forwardRef(BaseTextComponent);
+export { Masks, MaskKey };

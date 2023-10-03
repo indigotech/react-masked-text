@@ -1,8 +1,8 @@
-import { MaskKey, Masks } from './masks';
+import { MaskHandlers, MaskKey } from './masks';
 
 export default class MaskResolver {
-  static resolve(kind: MaskKey): any {
-    const handler = Masks[kind];
+  static resolve(kind: MaskKey) {
+    const handler = MaskHandlers[kind];
 
     if (!handler) {
       return null;

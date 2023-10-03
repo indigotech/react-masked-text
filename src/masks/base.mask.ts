@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import VMasker from './internal-dependencies/vanilla-masker.js';
+import VMasker from './internal-dependencies/vanilla-masker';
 
 export default class BaseMask {
   getVMasker(): typeof VMasker {

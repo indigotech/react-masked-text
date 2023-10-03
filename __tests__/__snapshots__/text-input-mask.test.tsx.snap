@@ -2,12 +2,14 @@
 
 exports[`TextInputMask renders controlled component 1`] = `
 <input
+  type="text"
   value=""
 />
 `;
 
 exports[`TextInputMask renders controlled component 2`] = `
 <input
+  type="text"
   value="123.123"
 />
 `;
@@ -18,12 +20,14 @@ exports[`TextInputMask renders controlled component with initial value 1`] = `
   "baseElement": <body>
     <div>
       <input
+        type="text"
         value="223"
       />
     </div>
   </body>,
   "container": <div>
     <input
+      type="text"
       value="223"
     />
   </div>,
@@ -87,12 +91,14 @@ exports[`TextInputMask renders uncontrolled component 1`] = `
   "baseElement": <body>
     <div>
       <input
+        type="text"
         value=""
       />
     </div>
   </body>,
   "container": <div>
     <input
+      type="text"
       value=""
     />
   </div>,
