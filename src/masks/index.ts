@@ -19,81 +19,35 @@ export type MaskKey =
   | 'zip-code'
   | 'cnpj';
 
-export const MaskHandlers = {
-  'cel-phone': CelPhoneMask,
-  cpf: CpfMask,
-  'credit-card': CreditCardMask,
-  custom: CustomMask,
-  datetime: DatetimeMask,
-  money: MoneyMask,
-  'only-numbers': OnlyNumbersMask,
-  'zip-code': ZipCodeMask,
-  cnpj: CnpjMask,
-};
-
+export type MaskHandlerType = CelPhoneMask | CpfMask | CreditCardMask | CustomMask | DatetimeMask | MoneyMask | OnlyNumbersMask | ZipCodeMask | CnpjMask;
 export class Masks {
-  static celPhone(customMask?: string) {
-    return {
-      mask: customMask || '(99) 99999-9999',
-      type: 'phone',
-      kind: 'cel-phone' as MaskKey,
-    }
+  static celPhone() {
+    return new CelPhoneMask();
   }
-  static cpf(customMask?: string) {
-    return {
-      mask: customMask || '999.999.999-99',
-      type: 'text',
-      kind: 'cpf' as MaskKey,
-    }
+  static cpf() {
+    return new CpfMask();
   }
-  static creditCard(customMask?: string) {
-    return {
-      mask: customMask || '9999 9999 9999 9999',
-      type: 'text',
-      kind: 'credit-card' as MaskKey,
-    }
+  static creditCard() {
+    return new CreditCardMask();
   }
   static custom(customMask: string) {
-    return {
-      mask: customMask,
-      type: 'text',
-      kind: 'custom' as MaskKey,
-    }
+    return new CustomMask(customMask);
   }
-  static datetime(customMask?: string) {
-    return {
-      mask: customMask || 'DD/MM/YYYY HH:mm:ss',
-      type: 'text',
-      kind: 'datetime' as MaskKey,
-    }
+  static datetime() {
+    return new DatetimeMask();
   }
-  static money(customMask?: string) {
-    return {
-      mask: customMask,
-      type: 'text',
-      kind: 'money' as MaskKey,
-    }
+  static money() {
+    return new MoneyMask();
   }
-  static onlyNumbers(customMask?: string) {
-    return {
-      mask: customMask || undefined,
-      type: 'number',
-      kind: 'only-numbers' as MaskKey,
-    }
+  static onlyNumbers() {
+    return new OnlyNumbersMask();
   }
-  static zipCode(customMask?: string) {
-    return {
-      mask: customMask || '99999-999',
-      type: 'text',
-      kind: 'zip-code' as MaskKey,
-    }
+  static zipCode() {
+    return new ZipCodeMask();
   }
-  static cnpj(customMask?: string) {
-    return {
-      mask: customMask || '99.999.999/9999-99',
-      type: 'text',
-      kind: 'cnpj' as MaskKey,
-    }
+  static cnpj() {
+    return new CnpjMask();
   }
 }
+
 export { CelPhoneMask, CnpjMask, CreditCardMask, CustomMask, DatetimeMask, MoneyMask, OnlyNumbersMask, ZipCodeMask, CpfMask };

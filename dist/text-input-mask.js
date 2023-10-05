@@ -712,8 +712,11 @@
     };
     var CustomMask = /** @class */ (function (_super) {
         __extends(CustomMask, _super);
-        function CustomMask() {
-            return _super !== null && _super.apply(this, arguments) || this;
+        function CustomMask(customMask) {
+            if (customMask === void 0) { customMask = ''; }
+            var _this = _super.call(this) || this;
+            _this._mask = customMask;
+            return _this;
         }
         CustomMask.getType = function () {
             return 'custom';
@@ -722,20 +725,19 @@
             if (value === '') {
                 return value;
             }
-            var mask = settings.mask;
-            var translation = this.mergeSettings(DEFAULT_TRANSLATION, settings.translation);
-            var masked = new TinyMask(mask, { translation: translation }).mask(value);
+            var translation = this.mergeSettings(DEFAULT_TRANSLATION, settings === null || settings === void 0 ? void 0 : settings.translation);
+            var masked = new TinyMask(this._mask, { translation: translation }).mask(value);
             return masked;
         };
         CustomMask.prototype.getRawValue = function (maskedValue, settings) {
-            if (!!settings && settings.getRawValue) {
-                return settings.getRawValue(maskedValue, settings);
+            if (!!settings && (settings === null || settings === void 0 ? void 0 : settings.getRawValue)) {
+                return settings === null || settings === void 0 ? void 0 : settings.getRawValue(maskedValue, settings);
             }
             return maskedValue;
         };
         CustomMask.prototype.validate = function (value, settings) {
-            if (!!settings && settings.validator) {
-                return settings.validator(value, settings);
+            if (!!settings && (settings === null || settings === void 0 ? void 0 : settings.validator)) {
+                return settings === null || settings === void 0 ? void 0 : settings.validator(value, settings);
             }
             return true;
         };
@@ -950,132 +952,60 @@
         return ZipCodeMask;
     }(BaseMask));
 
-    var MaskHandlers = {
-        'cel-phone': CelPhoneMask,
-        cpf: CpfMask,
-        'credit-card': CreditCardMask,
-        custom: CustomMask,
-        datetime: DatetimeMask,
-        money: MoneyMask,
-        'only-numbers': OnlyNumbersMask,
-        'zip-code': ZipCodeMask,
-        cnpj: CnpjMask,
-    };
     var Masks = /** @class */ (function () {
         function Masks() {
         }
-        Masks.celPhone = function (customMask) {
-            return {
-                mask: customMask || '(99) 99999-9999',
-                type: 'phone',
-                kind: 'cel-phone',
-            };
+        Masks.celPhone = function () {
+            return new CelPhoneMask();
         };
-        Masks.cpf = function (customMask) {
-            return {
-                mask: customMask || '999.999.999-99',
-                type: 'text',
-                kind: 'cpf',
-            };
+        Masks.cpf = function () {
+            return new CpfMask();
         };
-        Masks.creditCard = function (customMask) {
-            return {
-                mask: customMask || '9999 9999 9999 9999',
-                type: 'text',
-                kind: 'credit-card',
-            };
+        Masks.creditCard = function () {
+            return new CreditCardMask();
         };
         Masks.custom = function (customMask) {
-            return {
-                mask: customMask,
-                type: 'text',
-                kind: 'custom',
-            };
+            return new CustomMask(customMask);
         };
-        Masks.datetime = function (customMask) {
-            return {
-                mask: customMask || 'DD/MM/YYYY HH:mm:ss',
-                type: 'text',
-                kind: 'datetime',
-            };
+        Masks.datetime = function () {
+            return new DatetimeMask();
         };
-        Masks.money = function (customMask) {
-            return {
-                mask: customMask,
-                type: 'text',
-                kind: 'money',
-            };
+        Masks.money = function () {
+            return new MoneyMask();
         };
-        Masks.onlyNumbers = function (customMask) {
-            return {
-                mask: customMask || undefined,
-                type: 'number',
-                kind: 'only-numbers',
-            };
+        Masks.onlyNumbers = function () {
+            return new OnlyNumbersMask();
         };
-        Masks.zipCode = function (customMask) {
-            return {
-                mask: customMask || '99999-999',
-                type: 'text',
-                kind: 'zip-code',
-            };
+        Masks.zipCode = function () {
+            return new ZipCodeMask();
         };
-        Masks.cnpj = function (customMask) {
-            return {
-                mask: customMask || '99.999.999/9999-99',
-                type: 'text',
-                kind: 'cnpj',
-            };
+        Masks.cnpj = function () {
+            return new CnpjMask();
         };
         return Masks;
     }());
 
-    var MaskResolver = /** @class */ (function () {
-        function MaskResolver() {
-        }
-        MaskResolver.resolve = function (kind) {
-            var handler = MaskHandlers[kind];
-            if (!handler) {
-                return null;
-                // throw new Error('Mask type not supported.');
-            }
-            return new handler();
-        };
-        return MaskResolver;
-    }());
-
     var BaseTextComponent = function (props, ref) {
-        var maskHandlerRef = React.useRef(null); // Adjust the type according to MaskResolver
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        var defaultValue = props.defaultValue, value = props.value, mask = props.mask, onChange = props.onChange, otherProps = __rest(props, ["defaultValue", "value", "mask", "onChange"]);
+        var defaultValue = props.defaultValue, value = props.value, mask = props.mask, type = props.type, onChange = props.onChange, otherProps = __rest(props, ["defaultValue", "value", "mask", "type", "onChange"]);
+        var maskHandler = mask; // Adjust the type according to MaskResolver
         var _a = React.useState(""), maskedValue = _a[0], setMaskedValue = _a[1];
         var isControlled = React.useCallback(function () {
             return value !== undefined;
         }, [value]);
         React.useEffect(function () {
-            var _a, _b;
             if (defaultValue !== undefined && value !== undefined) {
                 throw new Error("Use either the defaultValue prop, or the value prop, but not both");
             }
-            maskHandlerRef.current = MaskResolver.resolve((mask === null || mask === void 0 ? void 0 : mask.kind) || "custom");
-            var masked = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(defaultValue || "", {
-                mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
-            })) || defaultValue;
+            var masked = maskHandler === null || maskHandler === void 0 ? void 0 : maskHandler.getValue(defaultValue || "");
             if (isControlled) {
-                masked =
-                    ((_b = maskHandlerRef.current) === null || _b === void 0 ? void 0 : _b.getValue(value || "", {
-                        mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
-                    })) || value;
+                masked = (maskHandler === null || maskHandler === void 0 ? void 0 : maskHandler.getValue(value || "")) || value;
             }
             setMaskedValue(masked);
         }, [mask, defaultValue, value, isControlled]);
         var handleChangeText = function (text) { return __awaiter(void 0, void 0, void 0, function () {
             var maskedText;
-            var _a;
-            return __generator(this, function (_b) {
-                maskedText = ((_a = maskHandlerRef.current) === null || _a === void 0 ? void 0 : _a.getValue(text || "", {
-                    mask: (mask === null || mask === void 0 ? void 0 : mask.mask) || "",
-                })) || text;
+            return __generator(this, function (_a) {
+                maskedText = (mask === null || mask === void 0 ? void 0 : mask.getValue(text || "")) || text;
                 onChange === null || onChange === void 0 ? void 0 : onChange(maskedText);
                 if (!isControlled()) {
                     setMaskedValue(maskedText);
@@ -1083,7 +1013,7 @@
                 return [2 /*return*/];
             });
         }); };
-        return (React.createElement("input", __assign({ ref: ref, type: (mask === null || mask === void 0 ? void 0 : mask.type) || "text" }, otherProps, { value: maskedValue, onChange: function (event) { return handleChangeText(event.currentTarget.value); } })));
+        return (React.createElement("input", __assign({ ref: ref, type: type !== null && type !== void 0 ? type : "text" }, otherProps, { value: maskedValue, onChange: function (event) { return handleChangeText(event.currentTarget.value); } })));
     };
     var textInputMask = React.forwardRef(BaseTextComponent);
 
