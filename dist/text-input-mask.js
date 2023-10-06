@@ -440,6 +440,9 @@
         function CelPhoneMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        CelPhoneMask.celPhone = function () {
+            return new CelPhoneMask();
+        };
         CelPhoneMask.getType = function () {
             return 'cel-phone';
         };
@@ -481,6 +484,7 @@
         };
         return CelPhoneMask;
     }(BaseMask));
+    var celPhoneMask = function () { return new CelPhoneMask(); };
 
     var CNPJ_MASK = '99.999.999/9999-99';
     var validateCnpj = function (cnpj) {
@@ -504,6 +508,9 @@
         function CnpjMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        CnpjMask.cnpj = function () {
+            return new CnpjMask();
+        };
         CnpjMask.getType = function () {
             return 'cnpj';
         };
@@ -518,115 +525,7 @@
         };
         return CnpjMask;
     }(BaseMask));
-
-    var CPF_MASK = '999.999.999-99';
-    var validateCPF = function (cpf) {
-        if (cpf == '') {
-            return true;
-        }
-        cpf = cpf.replace(/\./gi, '').replace(/-/gi, '');
-        var isValid = true;
-        var sum;
-        var rest;
-        var i;
-        i = 0;
-        sum = 0;
-        if (cpf.length != 11 ||
-            cpf == '00000000000' ||
-            cpf == '11111111111' ||
-            cpf == '22222222222' ||
-            cpf == '33333333333' ||
-            cpf == '44444444444' ||
-            cpf == '55555555555' ||
-            cpf == '66666666666' ||
-            cpf == '77777777777' ||
-            cpf == '88888888888' ||
-            cpf == '99999999999') {
-            isValid = false;
-        }
-        for (i = 1; i <= 9; i++) {
-            sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
-        }
-        rest = (sum * 10) % 11;
-        if (rest == 10 || rest == 11) {
-            rest = 0;
-        }
-        if (rest != parseInt(cpf.substring(9, 10))) {
-            isValid = false;
-        }
-        sum = 0;
-        for (i = 1; i <= 10; i++) {
-            sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
-        }
-        rest = (sum * 10) % 11;
-        if (rest == 10 || rest == 11) {
-            rest = 0;
-        }
-        if (rest != parseInt(cpf.substring(10, 11))) {
-            isValid = false;
-        }
-        return isValid;
-    };
-    var CpfMask = /** @class */ (function (_super) {
-        __extends(CpfMask, _super);
-        function CpfMask() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        CpfMask.getType = function () {
-            return 'cpf';
-        };
-        CpfMask.prototype.getValue = function (value) {
-            return this.getVMasker().toPattern(value, CPF_MASK);
-        };
-        CpfMask.prototype.getRawValue = function (maskedValue) {
-            return _super.prototype.removeNotNumbers.call(this, maskedValue);
-        };
-        CpfMask.prototype.validate = function (value) {
-            return validateCPF(value);
-        };
-        return CpfMask;
-    }(BaseMask));
-
-    var CREDIT_CARD_MASK = '9999 9999 9999 9999';
-    var CREDIT_CARD_OBFUSCATED_MASK = '9999 **** **** 9999';
-    var CREDIT_CARD_SETTINGS = {
-        obfuscated: false,
-    };
-    var CreditCardMask = /** @class */ (function (_super) {
-        __extends(CreditCardMask, _super);
-        function CreditCardMask() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        CreditCardMask.getType = function () {
-            return 'credit-card';
-        };
-        CreditCardMask.prototype.getValue = function (value, settings) {
-            var selectedMask = this._getMask(settings);
-            return this.getVMasker().toPattern(value, selectedMask);
-        };
-        CreditCardMask.prototype.validate = function (value, settings) {
-            if (!!value) {
-                var selectedMask = this._getMask(settings);
-                return value.length === selectedMask.length;
-            }
-            return true;
-        };
-        CreditCardMask.prototype.getRawValue = function (maskedValue) {
-            if (!maskedValue)
-                return [];
-            return maskedValue.split(' ').map(function (val) {
-                if (!val)
-                    return '';
-                return val.trim();
-            });
-        };
-        CreditCardMask.prototype._getMask = function (settings) {
-            var mergedSettings = _super.prototype.mergeSettings.call(this, CREDIT_CARD_SETTINGS, settings);
-            var selectedMask = mergedSettings.obfuscated ? CREDIT_CARD_OBFUSCATED_MASK : CREDIT_CARD_MASK;
-            return selectedMask;
-        };
-        return CreditCardMask;
-    }(BaseMask));
+    var cnpjMask = function () { return new CnpjMask(); };
 
     var TinyMask = /** @class */ (function () {
         function TinyMask(pattern, options) {
@@ -718,6 +617,9 @@
             _this._mask = customMask;
             return _this;
         }
+        CustomMask.custom = function (customMask) {
+            return new CustomMask(customMask);
+        };
         CustomMask.getType = function () {
             return 'custom';
         };
@@ -743,6 +645,124 @@
         };
         return CustomMask;
     }(BaseMask));
+    var customMask = function (customMask) { return new CustomMask(customMask); };
+
+    var CPF_MASK = '999.999.999-99';
+    var validateCPF = function (cpf) {
+        if (cpf == '') {
+            return true;
+        }
+        cpf = cpf.replace(/\./gi, '').replace(/-/gi, '');
+        var isValid = true;
+        var sum;
+        var rest;
+        var i;
+        i = 0;
+        sum = 0;
+        if (cpf.length != 11 ||
+            cpf == '00000000000' ||
+            cpf == '11111111111' ||
+            cpf == '22222222222' ||
+            cpf == '33333333333' ||
+            cpf == '44444444444' ||
+            cpf == '55555555555' ||
+            cpf == '66666666666' ||
+            cpf == '77777777777' ||
+            cpf == '88888888888' ||
+            cpf == '99999999999') {
+            isValid = false;
+        }
+        for (i = 1; i <= 9; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        }
+        rest = (sum * 10) % 11;
+        if (rest == 10 || rest == 11) {
+            rest = 0;
+        }
+        if (rest != parseInt(cpf.substring(9, 10))) {
+            isValid = false;
+        }
+        sum = 0;
+        for (i = 1; i <= 10; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        }
+        rest = (sum * 10) % 11;
+        if (rest == 10 || rest == 11) {
+            rest = 0;
+        }
+        if (rest != parseInt(cpf.substring(10, 11))) {
+            isValid = false;
+        }
+        return isValid;
+    };
+    var CpfMask = /** @class */ (function (_super) {
+        __extends(CpfMask, _super);
+        function CpfMask() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        CpfMask.cpf = function () {
+            return new CpfMask();
+        };
+        CpfMask.getType = function () {
+            return 'cpf';
+        };
+        CpfMask.prototype.getValue = function (value) {
+            return this.getVMasker().toPattern(value, CPF_MASK);
+        };
+        CpfMask.prototype.getRawValue = function (maskedValue) {
+            return _super.prototype.removeNotNumbers.call(this, maskedValue);
+        };
+        CpfMask.prototype.validate = function (value) {
+            return validateCPF(value);
+        };
+        return CpfMask;
+    }(BaseMask));
+    var cpfMask = function () { return new CpfMask(); };
+
+    var CREDIT_CARD_MASK = '9999 9999 9999 9999';
+    var CREDIT_CARD_OBFUSCATED_MASK = '9999 **** **** 9999';
+    var CREDIT_CARD_SETTINGS = {
+        obfuscated: false,
+    };
+    var CreditCardMask = /** @class */ (function (_super) {
+        __extends(CreditCardMask, _super);
+        function CreditCardMask() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        CreditCardMask.creditCard = function () {
+            return new CreditCardMask();
+        };
+        CreditCardMask.getType = function () {
+            return 'credit-card';
+        };
+        CreditCardMask.prototype.getValue = function (value, settings) {
+            var selectedMask = this._getMask(settings);
+            return this.getVMasker().toPattern(value, selectedMask);
+        };
+        CreditCardMask.prototype.validate = function (value, settings) {
+            if (!!value) {
+                var selectedMask = this._getMask(settings);
+                return value.length === selectedMask.length;
+            }
+            return true;
+        };
+        CreditCardMask.prototype.getRawValue = function (maskedValue) {
+            if (!maskedValue)
+                return [];
+            return maskedValue.split(' ').map(function (val) {
+                if (!val)
+                    return '';
+                return val.trim();
+            });
+        };
+        CreditCardMask.prototype._getMask = function (settings) {
+            var mergedSettings = _super.prototype.mergeSettings.call(this, CREDIT_CARD_SETTINGS, settings);
+            var selectedMask = mergedSettings.obfuscated ? CREDIT_CARD_OBFUSCATED_MASK : CREDIT_CARD_MASK;
+            return selectedMask;
+        };
+        return CreditCardMask;
+    }(BaseMask));
+    var creditCardMask = function () { return new CreditCardMask(); };
 
     var parseStringDate = function (input, format) {
         if (input.length !== format.length) {
@@ -828,6 +848,9 @@
         function DatetimeMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        DatetimeMask.datetime = function () {
+            return new DatetimeMask();
+        };
         DatetimeMask.getType = function () {
             return 'datetime';
         };
@@ -859,6 +882,7 @@
         };
         return DatetimeMask;
     }(BaseMask));
+    var datetimeMask = function () { return new DatetimeMask(); };
 
     var MONEY_MASK_SETTINGS = {
         precision: 2,
@@ -873,6 +897,9 @@
         function MoneyMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        MoneyMask.money = function () {
+            return new MoneyMask();
+        };
         MoneyMask.getType = function () {
             return 'money';
         };
@@ -907,12 +934,16 @@
         };
         return MoneyMask;
     }(BaseMask));
+    var moneyMask = function () { return new MoneyMask(); };
 
     var OnlyNumbersMask = /** @class */ (function (_super) {
         __extends(OnlyNumbersMask, _super);
         function OnlyNumbersMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        OnlyNumbersMask.onlyNumbers = function () {
+            return new OnlyNumbersMask();
+        };
         OnlyNumbersMask.getType = function () {
             return 'only-numbers';
         };
@@ -927,6 +958,7 @@
         };
         return OnlyNumbersMask;
     }(BaseMask));
+    var onlyNumbersMask = function () { return new OnlyNumbersMask(); };
 
     var ZIP_CODE_MASK = '99999-999';
     var ZipCodeMask = /** @class */ (function (_super) {
@@ -934,6 +966,9 @@
         function ZipCodeMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        ZipCodeMask.zipCode = function () {
+            return new ZipCodeMask();
+        };
         ZipCodeMask.getType = function () {
             return 'zip-code';
         };
@@ -951,39 +986,7 @@
         };
         return ZipCodeMask;
     }(BaseMask));
-
-    var Masks = /** @class */ (function () {
-        function Masks() {
-        }
-        Masks.celPhone = function () {
-            return new CelPhoneMask();
-        };
-        Masks.cpf = function () {
-            return new CpfMask();
-        };
-        Masks.creditCard = function () {
-            return new CreditCardMask();
-        };
-        Masks.custom = function (customMask) {
-            return new CustomMask(customMask);
-        };
-        Masks.datetime = function () {
-            return new DatetimeMask();
-        };
-        Masks.money = function () {
-            return new MoneyMask();
-        };
-        Masks.onlyNumbers = function () {
-            return new OnlyNumbersMask();
-        };
-        Masks.zipCode = function () {
-            return new ZipCodeMask();
-        };
-        Masks.cnpj = function () {
-            return new CnpjMask();
-        };
-        return Masks;
-    }());
+    var zipCodeMask = function () { return new ZipCodeMask(); };
 
     var BaseTextComponent = function (props, ref) {
         var defaultValue = props.defaultValue, value = props.value, mask = props.mask, type = props.type, onChange = props.onChange, otherProps = __rest(props, ["defaultValue", "value", "mask", "type", "onChange"]);
@@ -1017,8 +1020,17 @@
     };
     var textInputMask = React.forwardRef(BaseTextComponent);
 
-    exports.Masks = Masks;
+    exports.BaseMask = BaseMask;
+    exports.celPhoneMask = celPhoneMask;
+    exports.cnpjMask = cnpjMask;
+    exports.cpfMask = cpfMask;
+    exports.creditCardMask = creditCardMask;
+    exports.customMask = customMask;
+    exports.datetimeMask = datetimeMask;
     exports.default = textInputMask;
+    exports.moneyMask = moneyMask;
+    exports.onlyNumbersMask = onlyNumbersMask;
+    exports.zipCodeMask = zipCodeMask;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

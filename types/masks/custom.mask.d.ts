@@ -11,4 +11,4 @@ export declare class CustomMask extends BaseMask {
     getRawValue(maskedValue: string, settings: Settings): string;
     validate(value: string, settings: Settings): boolean;
 }
-export {};
+export { };

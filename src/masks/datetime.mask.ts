@@ -11,6 +11,10 @@ const DATETIME_MASK_SETTINGS: Settings = {
 };
 
 export class DatetimeMask extends BaseMask {
+  static datetime() {
+    return new DatetimeMask();
+  }
+
   static getType(): string {
     return 'datetime';
   }
@@ -48,3 +52,5 @@ export class DatetimeMask extends BaseMask {
     return d instanceof Date && !isNaN(d.getTime());
   }
 }
+
+export const datetimeMask = () => new DatetimeMask();

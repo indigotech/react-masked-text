@@ -34,34 +34,22 @@ interface CellPhoneSettings {
     dddMask?: string;
 }
 declare class CelPhoneMask extends BaseMask {
+    static celPhone(): CelPhoneMask;
     static getType(): string;
     getValue(value: string, settings?: CellPhoneSettings): string;
     getRawValue(maskedValue: string): string;
     validate(value: string, settings?: CellPhoneSettings): boolean;
     _getMask(value: string, settings: CellPhoneSettings): string;
 }
+declare const celPhoneMask: () => CelPhoneMask;
 declare class CnpjMask extends BaseMask {
+    static cnpj(): CnpjMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
     validate(value: string): boolean;
 }
-declare class CpfMask extends BaseMask {
-    static getType(): string;
-    getValue(value: string): string;
-    getRawValue(maskedValue: string): string;
-    validate(value: string): boolean;
-}
-interface ICreditCardSettings {
-    obfuscated?: boolean;
-}
-declare class CreditCardMask extends BaseMask {
-    static getType(): string;
-    getValue(value: string, settings?: ICreditCardSettings): string;
-    validate(value: string, settings: ICreditCardSettings): boolean;
-    getRawValue(maskedValue: string): string[];
-    private _getMask;
-}
+declare const cnpjMask: () => CnpjMask;
 interface Settings {
     mask?: string;
     translation?: any;
@@ -71,15 +59,38 @@ interface Settings {
 declare class CustomMask extends BaseMask {
     private _mask;
     constructor(customMask?: string);
+    static custom(customMask: string): CustomMask;
     static getType(): string;
     getValue(value: string, settings?: Settings): string;
     getRawValue(maskedValue: string, settings: Settings): string;
     validate(value: string, settings: Settings): boolean;
 }
+declare const customMask: (customMask: string) => CustomMask;
+declare class CpfMask extends BaseMask {
+    static cpf(): CpfMask;
+    static getType(): string;
+    getValue(value: string): string;
+    getRawValue(maskedValue: string): string;
+    validate(value: string): boolean;
+}
+declare const cpfMask: () => CpfMask;
+interface ICreditCardSettings {
+    obfuscated?: boolean;
+}
+declare class CreditCardMask extends BaseMask {
+    static creditCard(): CreditCardMask;
+    static getType(): string;
+    getValue(value: string, settings?: ICreditCardSettings): string;
+    validate(value: string, settings: ICreditCardSettings): boolean;
+    getRawValue(maskedValue: string): string[];
+    private _getMask;
+}
+declare const creditCardMask: () => CreditCardMask;
 interface Settings$0 {
     format: string;
 }
 declare class DatetimeMask extends BaseMask {
+    static datetime(): DatetimeMask;
     static getType(): string;
     getValue(value: string, settings?: Settings$0): string;
     getRawValue<Date>(maskedValue: string, settings: Settings$0): Date;
@@ -88,6 +99,7 @@ declare class DatetimeMask extends BaseMask {
     /** https://stackoverflow.com/a/1353711/3670829 */
     _isValidDate(d: Date): boolean;
 }
+declare const datetimeMask: () => DatetimeMask;
 interface MoneyMaskSettings {
     precision: number;
     separator: string;
@@ -97,39 +109,33 @@ interface MoneyMaskSettings {
     zeroCents: boolean;
 }
 declare class MoneyMask extends BaseMask {
+    static money(): MoneyMask;
     static getType(): string;
     getValue(value: string, settings?: Partial<MoneyMaskSettings>, oldValue?: string): string;
     getRawValue(maskedValue: string, settings?: Partial<MoneyMaskSettings>): number;
     validate(): boolean;
     private _insert;
 }
+declare const moneyMask: () => MoneyMask;
 declare class OnlyNumbersMask extends BaseMask {
+    static onlyNumbers(): OnlyNumbersMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
     validate(): boolean;
 }
+declare const onlyNumbersMask: () => OnlyNumbersMask;
 declare class ZipCodeMask extends BaseMask {
+    static zipCode(): ZipCodeMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
     validate(value: string): boolean;
 }
-type MaskKey = "cel-phone" | "cpf" | "credit-card" | "custom" | "datetime" | "money" | "only-numbers" | "zip-code" | "cnpj";
-type MaskHandlerType = CelPhoneMask | CpfMask | CreditCardMask | CustomMask | DatetimeMask | MoneyMask | OnlyNumbersMask | ZipCodeMask | CnpjMask;
-declare class Masks {
-    static celPhone(): CelPhoneMask;
-    static cpf(): CpfMask;
-    static creditCard(): CreditCardMask;
-    static custom(customMask: string): CustomMask;
-    static datetime(): DatetimeMask;
-    static money(): MoneyMask;
-    static onlyNumbers(): OnlyNumbersMask;
-    static zipCode(): ZipCodeMask;
-    static cnpj(): CnpjMask;
-}
+declare const zipCodeMask: () => ZipCodeMask;
+type MaskHandlerType = CelPhoneMask | CnpjMask | CustomMask | CpfMask | CreditCardMask | DatetimeMask | MoneyMask | OnlyNumbersMask | ZipCodeMask;
 interface BaseTextComponentProps extends InputHTMLAttributes<HTMLInputElement> {
     mask?: MaskHandlerType;
 }
 declare const _default: React.ForwardRefExoticComponent<BaseTextComponentProps & React.RefAttributes<HTMLInputElement>>;
-export { _default as default, BaseTextComponentProps, Masks, MaskKey, MaskHandlerType };
+export { _default as default, BaseTextComponentProps, BaseMask, MaskHandlerType, celPhoneMask, customMask, cnpjMask, cpfMask, creditCardMask, datetimeMask, moneyMask, onlyNumbersMask, zipCodeMask };

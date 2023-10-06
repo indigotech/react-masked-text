@@ -1,12 +1,31 @@
 import React, {
   useState,
-  useRef,
   useEffect,
   ForwardRefRenderFunction,
   InputHTMLAttributes,
 } from "react";
 
-import { MaskKey, Masks, MaskHandlerType } from "./masks";
+import BaseMask from "./masks/base.mask";
+import { CelPhoneMask, celPhoneMask } from "./masks/cel-phone.mask";
+import { CnpjMask, cnpjMask } from "./masks/cnpj.mask";
+import { CustomMask, customMask } from "./masks/custom.mask";
+import { CpfMask, cpfMask } from "./masks/cpf.mask";
+import { CreditCardMask, creditCardMask } from "./masks/credit-card.mask";
+import { DatetimeMask, datetimeMask } from "./masks/datetime.mask";
+import { MoneyMask, moneyMask } from "./masks/money.mask";
+import { OnlyNumbersMask, onlyNumbersMask } from "./masks/only-numbers.mask";
+import { ZipCodeMask, zipCodeMask } from "./masks/zip-code.mask";
+
+type MaskHandlerType =
+  | CelPhoneMask
+  | CnpjMask
+  | CustomMask
+  | CpfMask
+  | CreditCardMask
+  | DatetimeMask
+  | MoneyMask
+  | OnlyNumbersMask
+  | ZipCodeMask;
 
 export interface BaseTextComponentProps
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -63,4 +82,16 @@ const BaseTextComponent: ForwardRefRenderFunction<
 };
 
 export default React.forwardRef(BaseTextComponent);
-export { Masks, MaskKey, MaskHandlerType };
+export {
+  BaseMask,
+  MaskHandlerType,
+  celPhoneMask,
+  customMask,
+  cnpjMask,
+  cpfMask,
+  creditCardMask,
+  datetimeMask,
+  moneyMask,
+  onlyNumbersMask,
+  zipCodeMask,
+};

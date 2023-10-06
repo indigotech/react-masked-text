@@ -23,6 +23,10 @@ const validateCnpj = (cnpj: string): boolean => {
 };
 
 export class CnpjMask extends BaseMask {
+  static cnpj() {
+    return new CnpjMask();
+  }
+
   static getType(): string {
     return 'cnpj';
   }
@@ -39,3 +43,5 @@ export class CnpjMask extends BaseMask {
     return validateCnpj(value);
   }
 }
+
+export const cnpjMask = () => new CnpjMask();

@@ -31,6 +31,10 @@ export class CustomMask extends BaseMask {
     this._mask = customMask;
   }
 
+  static custom(customMask: string) {
+    return new CustomMask(customMask);
+  }
+
   static getType(): string {
     return 'custom';
   }
@@ -61,3 +65,5 @@ export class CustomMask extends BaseMask {
     return true;
   }
 }
+
+export const customMask = (customMask: string) => new CustomMask(customMask);

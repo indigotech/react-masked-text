@@ -1,6 +1,10 @@
 import BaseMask from './base.mask';
 
 export class OnlyNumbersMask extends BaseMask {
+  static onlyNumbers() {
+    return new OnlyNumbersMask();
+  }
+
   static getType(): string {
     return 'only-numbers';
   }
@@ -17,3 +21,5 @@ export class OnlyNumbersMask extends BaseMask {
     return true;
   }
 }
+
+export const onlyNumbersMask = () => new OnlyNumbersMask();
