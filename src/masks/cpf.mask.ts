@@ -64,10 +64,6 @@ const validateCPF = (cpf: string): boolean => {
 };
 
 export class CpfMask extends BaseMask {
-  static cpf() {
-    return new CpfMask();
-  }
-
   static getType(): string {
     return 'cpf';
   }

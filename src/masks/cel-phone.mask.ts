@@ -14,10 +14,6 @@ const CEL_PHONE_SETTINGS: CellPhoneSettings = {
 };
 
 export class CelPhoneMask extends BaseMask {
-  static celPhone() {
-    return new CelPhoneMask();
-  }
-
   static getType(): string {
     return 'cel-phone';
   }

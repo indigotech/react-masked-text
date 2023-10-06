@@ -19,10 +19,6 @@ const MONEY_MASK_SETTINGS: MoneyMaskSettings = {
 };
 
 export class MoneyMask extends BaseMask {
-  static money() {
-    return new MoneyMask();
-  }
-
   static getType(): string {
     return 'money';
   }

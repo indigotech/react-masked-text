@@ -34,7 +34,6 @@ interface CellPhoneSettings {
     dddMask?: string;
 }
 declare class CelPhoneMask extends BaseMask {
-    static celPhone(): CelPhoneMask;
     static getType(): string;
     getValue(value: string, settings?: CellPhoneSettings): string;
     getRawValue(maskedValue: string): string;
@@ -43,7 +42,6 @@ declare class CelPhoneMask extends BaseMask {
 }
 declare const celPhoneMask: () => CelPhoneMask;
 declare class CnpjMask extends BaseMask {
-    static cnpj(): CnpjMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
@@ -59,7 +57,6 @@ interface Settings {
 declare class CustomMask extends BaseMask {
     private _mask;
     constructor(customMask?: string);
-    static custom(customMask: string): CustomMask;
     static getType(): string;
     getValue(value: string, settings?: Settings): string;
     getRawValue(maskedValue: string, settings: Settings): string;
@@ -67,7 +64,6 @@ declare class CustomMask extends BaseMask {
 }
 declare const customMask: (customMask: string) => CustomMask;
 declare class CpfMask extends BaseMask {
-    static cpf(): CpfMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
@@ -78,7 +74,6 @@ interface ICreditCardSettings {
     obfuscated?: boolean;
 }
 declare class CreditCardMask extends BaseMask {
-    static creditCard(): CreditCardMask;
     static getType(): string;
     getValue(value: string, settings?: ICreditCardSettings): string;
     validate(value: string, settings: ICreditCardSettings): boolean;
@@ -90,7 +85,6 @@ interface Settings$0 {
     format: string;
 }
 declare class DatetimeMask extends BaseMask {
-    static datetime(): DatetimeMask;
     static getType(): string;
     getValue(value: string, settings?: Settings$0): string;
     getRawValue<Date>(maskedValue: string, settings: Settings$0): Date;
@@ -109,7 +103,6 @@ interface MoneyMaskSettings {
     zeroCents: boolean;
 }
 declare class MoneyMask extends BaseMask {
-    static money(): MoneyMask;
     static getType(): string;
     getValue(value: string, settings?: Partial<MoneyMaskSettings>, oldValue?: string): string;
     getRawValue(maskedValue: string, settings?: Partial<MoneyMaskSettings>): number;
@@ -118,7 +111,6 @@ declare class MoneyMask extends BaseMask {
 }
 declare const moneyMask: () => MoneyMask;
 declare class OnlyNumbersMask extends BaseMask {
-    static onlyNumbers(): OnlyNumbersMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;
@@ -126,7 +118,6 @@ declare class OnlyNumbersMask extends BaseMask {
 }
 declare const onlyNumbersMask: () => OnlyNumbersMask;
 declare class ZipCodeMask extends BaseMask {
-    static zipCode(): ZipCodeMask;
     static getType(): string;
     getValue(value: string): string;
     getRawValue(maskedValue: string): string;

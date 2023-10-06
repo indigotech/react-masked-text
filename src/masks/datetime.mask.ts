@@ -11,10 +11,6 @@ const DATETIME_MASK_SETTINGS: Settings = {
 };
 
 export class DatetimeMask extends BaseMask {
-  static datetime() {
-    return new DatetimeMask();
-  }
-
   static getType(): string {
     return 'datetime';
   }

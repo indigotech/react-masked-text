@@ -12,10 +12,6 @@ const CREDIT_CARD_SETTINGS: ICreditCardSettings = {
 };
 
 export class CreditCardMask extends BaseMask {
-  static creditCard() {
-    return new CreditCardMask();
-  }
-
   static getType(): string {
     return 'credit-card';
   }

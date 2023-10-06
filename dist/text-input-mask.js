@@ -440,9 +440,6 @@
         function CelPhoneMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        CelPhoneMask.celPhone = function () {
-            return new CelPhoneMask();
-        };
         CelPhoneMask.getType = function () {
             return 'cel-phone';
         };
@@ -508,9 +505,6 @@
         function CnpjMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        CnpjMask.cnpj = function () {
-            return new CnpjMask();
-        };
         CnpjMask.getType = function () {
             return 'cnpj';
         };
@@ -617,9 +611,6 @@
             _this._mask = customMask;
             return _this;
         }
-        CustomMask.custom = function (customMask) {
-            return new CustomMask(customMask);
-        };
         CustomMask.getType = function () {
             return 'custom';
         };
@@ -700,9 +691,6 @@
         function CpfMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        CpfMask.cpf = function () {
-            return new CpfMask();
-        };
         CpfMask.getType = function () {
             return 'cpf';
         };
@@ -729,9 +717,6 @@
         function CreditCardMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        CreditCardMask.creditCard = function () {
-            return new CreditCardMask();
-        };
         CreditCardMask.getType = function () {
             return 'credit-card';
         };
@@ -848,9 +833,6 @@
         function DatetimeMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        DatetimeMask.datetime = function () {
-            return new DatetimeMask();
-        };
         DatetimeMask.getType = function () {
             return 'datetime';
         };
@@ -897,9 +879,6 @@
         function MoneyMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        MoneyMask.money = function () {
-            return new MoneyMask();
-        };
         MoneyMask.getType = function () {
             return 'money';
         };
@@ -941,9 +920,6 @@
         function OnlyNumbersMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        OnlyNumbersMask.onlyNumbers = function () {
-            return new OnlyNumbersMask();
-        };
         OnlyNumbersMask.getType = function () {
             return 'only-numbers';
         };
@@ -966,9 +942,6 @@
         function ZipCodeMask() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        ZipCodeMask.zipCode = function () {
-            return new ZipCodeMask();
-        };
         ZipCodeMask.getType = function () {
             return 'zip-code';
         };

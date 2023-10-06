@@ -31,10 +31,6 @@ export class CustomMask extends BaseMask {
     this._mask = customMask;
   }
 
-  static custom(customMask: string) {
-    return new CustomMask(customMask);
-  }
-
   static getType(): string {
     return 'custom';
   }
