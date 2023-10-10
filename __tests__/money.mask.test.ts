@@ -1,4 +1,4 @@
-import { MoneyMask } from '../src/masks';
+import { MoneyMask } from './../src/masks/money.mask';
 
 test('getType results money', () => {
     var expected = 'money';

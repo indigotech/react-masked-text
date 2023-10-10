@@ -21,6 +21,7 @@ declare const VMasker: {
 };
 declare class BaseMask {
     getVMasker(): typeof VMasker;
+    getValue(value: string): string;
     mergeSettings<P = Record<string, any>>(obj1: P, obj2: P): P;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getRawValue(maskedValue: string, settings?: any): any;
@@ -124,9 +125,8 @@ declare class ZipCodeMask extends BaseMask {
     validate(value: string): boolean;
 }
 declare const zipCodeMask: () => ZipCodeMask;
-type MaskHandlerType = CelPhoneMask | CnpjMask | CustomMask | CpfMask | CreditCardMask | DatetimeMask | MoneyMask | OnlyNumbersMask | ZipCodeMask;
 interface BaseTextComponentProps extends InputHTMLAttributes<HTMLInputElement> {
-    mask?: MaskHandlerType;
+    mask?: BaseMask;
 }
 declare const _default: React.ForwardRefExoticComponent<BaseTextComponentProps & React.RefAttributes<HTMLInputElement>>;
-export { _default as default, BaseTextComponentProps, BaseMask, MaskHandlerType, celPhoneMask, customMask, cnpjMask, cpfMask, creditCardMask, datetimeMask, moneyMask, onlyNumbersMask, zipCodeMask };
+export { _default as default, BaseTextComponentProps, BaseMask, celPhoneMask, customMask, cnpjMask, cpfMask, creditCardMask, datetimeMask, moneyMask, onlyNumbersMask, zipCodeMask };

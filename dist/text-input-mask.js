@@ -395,6 +395,9 @@
         BaseMask.prototype.getVMasker = function () {
             return VMasker;
         };
+        BaseMask.prototype.getValue = function (value) {
+            return value;
+        };
         BaseMask.prototype.mergeSettings = function (obj1, obj2) {
             var obj3 = {};
             for (var attrname in obj1) {

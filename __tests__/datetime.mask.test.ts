@@ -1,4 +1,4 @@
-import { DatetimeMask } from '../src/masks';
+import { DatetimeMask } from './../src/masks/datetime.mask';
 var moment = require('moment');
 const { parseStringDate } = require('../src/masks/internal-dependencies/date-parser.ts');
 

@@ -6,6 +6,10 @@ export default class BaseMask {
     return VMasker;
   }
 
+  getValue(value: string): string {
+    return value;
+  }
+
   mergeSettings<P = Record<string, any>>(obj1: P, obj2: P): P {
     const obj3: Record<string, any> = {};
     for (const attrname in obj1) {
