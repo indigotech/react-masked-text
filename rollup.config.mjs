@@ -11,9 +11,9 @@ let includePathOptions = {
 
 
 export default {
-  input: "src/text-input-mask.tsx",
+  input: "src/index.ts",
   output: {
-    file: "dist/text-input-mask.js",
+    file: "dist/index.js",
     name: 'My Bundle',
     format: "umd"
   },
