@@ -1,6 +1,6 @@
 {
   "name": "react-masked-text",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "Text and TextInput with mask for React applications, based on benhurott/react-native-masked-text.",
   "licenses": [
     {
@@ -8,8 +8,8 @@
       "url": "https://www.opensource.org/licenses/mit-license.php"
     }
   ],
-  "main": "dist/text-input-mask.js",
-  "types": "types/text-input-mask.d.ts",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "BABEL_ENV=test jest",
     "build": "BABEL_ENV=build rollup -c --bundleConfigAsCjs"

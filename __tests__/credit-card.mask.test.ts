@@ -1,4 +1,4 @@
-import { CreditCardMask } from '../src/masks';
+import { CreditCardMask } from './../src/masks/credit-card.mask';
 
 test('getType results credit-card', () => {
     var expected = 'credit-card';

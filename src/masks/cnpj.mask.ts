@@ -22,7 +22,7 @@ const validateCnpj = (cnpj: string): boolean => {
   return dig1 * 10 + dig2 == digito;
 };
 
-export class CnpjMask extends BaseMask {
+class CnpjMask extends BaseMask {
   static getType(): string {
     return 'cnpj';
   }
@@ -39,3 +39,5 @@ export class CnpjMask extends BaseMask {
     return validateCnpj(value);
   }
 }
+
+export const cnpjMask = () => new CnpjMask();

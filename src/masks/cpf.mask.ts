@@ -63,7 +63,7 @@ const validateCPF = (cpf: string): boolean => {
   return isValid;
 };
 
-export class CpfMask extends BaseMask {
+class CpfMask extends BaseMask {
   static getType(): string {
     return 'cpf';
   }
@@ -80,3 +80,5 @@ export class CpfMask extends BaseMask {
     return validateCPF(value);
   }
 }
+
+export const cpfMask = () => new CpfMask();

@@ -2,7 +2,7 @@ import BaseMask from './base.mask';
 
 const ZIP_CODE_MASK = '99999-999';
 
-export class ZipCodeMask extends BaseMask {
+class ZipCodeMask extends BaseMask {
   static getType(): string {
     return 'zip-code';
   }
@@ -23,3 +23,5 @@ export class ZipCodeMask extends BaseMask {
     return true;
   }
 }
+
+export const zipCodeMask = () => new ZipCodeMask();

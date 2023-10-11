@@ -1,4 +1,4 @@
-import VMasker from './internal-dependencies/vanilla-masker.js';
+import VMasker from './internal-dependencies/vanilla-masker.ts';
 export default class BaseMask {
     getVMasker(): typeof VMasker;
     mergeSettings<P = Record<string, any>>(obj1: P, obj2: P): P;

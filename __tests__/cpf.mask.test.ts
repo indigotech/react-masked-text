@@ -1,4 +1,4 @@
-import { CpfMask } from '../src/masks';
+import { CpfMask } from './../src/masks/cpf.mask';
 
 test('getType results cpf', () => {
     var expected = 'cpf';

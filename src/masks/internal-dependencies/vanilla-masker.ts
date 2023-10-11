@@ -1,3 +1,4 @@
+//@ts-nocheck
 class VanillaMasker {
   constructor(elements) {
     this.elements = elements;

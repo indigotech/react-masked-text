@@ -1,4 +1,4 @@
-import { CelPhoneMask } from '../src/masks';
+import { CelPhoneMask } from './../src/masks/cel-phone.mask';
 
 test('getType results cel-phone', () => {
     var expected = 'cel-phone';
