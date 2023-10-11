@@ -1,6 +1,6 @@
 import BaseMask from './base.mask';
 
-export class OnlyNumbersMask extends BaseMask {
+class OnlyNumbersMask extends BaseMask {
   static getType(): string {
     return 'only-numbers';
   }

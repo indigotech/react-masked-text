@@ -10,7 +10,7 @@ const DATETIME_MASK_SETTINGS: Settings = {
   format: 'DD/MM/YYYY HH:mm:ss',
 };
 
-export class DatetimeMask extends BaseMask {
+class DatetimeMask extends BaseMask {
   static getType(): string {
     return 'datetime';
   }

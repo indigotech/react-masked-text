@@ -11,7 +11,7 @@ const CREDIT_CARD_SETTINGS: ICreditCardSettings = {
   obfuscated: false,
 };
 
-export class CreditCardMask extends BaseMask {
+class CreditCardMask extends BaseMask {
   static getType(): string {
     return 'credit-card';
   }

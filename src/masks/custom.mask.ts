@@ -24,7 +24,7 @@ const DEFAULT_TRANSLATION: { [key: string]: (val: string) => string } = {
   },
 };
 
-export class CustomMask extends BaseMask {
+class CustomMask extends BaseMask {
   private _mask: string;
   constructor(customMask: string = '') {
     super();
