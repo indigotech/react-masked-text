@@ -13,7 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "declarationDir": "types"
+    "declarationDir": "dist/types"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
