@@ -3,6 +3,7 @@ const ts = require('rollup-plugin-ts');
 const babel = require("rollup-plugin-babel");
 const resolve = require("rollup-plugin-node-resolve");
 const copy = require("rollup-plugin-copy");
+const terser = require("@rollup/plugin-terser");
 
 let includePathOptions = {
   paths: ['src'],
@@ -15,20 +16,17 @@ export default {
   output: {
     file: "dist/index.js",
     name: 'My Bundle',
-    format: "umd"
-  },
-  name: 'ReactTextMask',
-  globals: {
-    react: 'React'
+    format: "umd",
+    globals: {
+      react: 'react',
+    },
   },
   external: ['react'],
-  globals: {
-    react: 'react'
-  },
   plugins: [
     copy({ 'src/masks/internal-dependencies': 'dist/internal-dependencies' }),
     resolve({ jsnext: true }),
     babel(),
-    ts()
+    ts(),
+    terser(),
   ]
 }

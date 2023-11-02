@@ -2,3 +2,13 @@ node_modules/
 .vscode/
 .idea/
 npm-debug.log
+src/
+tiny-mask
+__tests__
+**.tgz
+.babelrc
+jest.config.js
+rollup.config.mjs
+tsconfig.json
+yarn-error.log
+yarn.lock
