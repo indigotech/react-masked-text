@@ -24,7 +24,7 @@ const BaseTextComponent: ForwardRefRenderFunction<HTMLInputElement, BaseTextComp
 
     let masked = maskHandler?.getValue(defaultValue || '');
 
-    if (isControlled) {
+    if (isControlled()) {
       masked = maskHandler?.getValue(value || '') || value;
     }
 
