@@ -1,6 +1,6 @@
 {
   "name": "react-masked-text",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Text and TextInput with mask for React applications, based on benhurott/react-native-masked-text.",
   "licenses": [
     {
