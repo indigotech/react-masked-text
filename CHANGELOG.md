@@ -1,3 +1,6 @@
+## 1.0.3
+* Adjust bug in accent in macOS
+
 ## 1.0.2
 * Remove unecessary eval
 
