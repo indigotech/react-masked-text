@@ -1,3 +1,6 @@
+## 1.0.5
+* Adjust bug in ref to mask components
+
 ## 1.0.3
 * Adjust bug in accent in macOS
 
